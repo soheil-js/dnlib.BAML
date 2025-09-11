@@ -1,18 +1,41 @@
-# dnlib.BAML [![Nuget](https://img.shields.io/nuget/v/dnlib.BAML)](https://www.nuget.org/packages/dnlib.BAML/)
-BAML Editor with dnlib in .NET
+# 🛠️dnlib.BAML [![Nuget](https://img.shields.io/nuget/v/dnlib.BAML)](https://www.nuget.org/packages/dnlib.BAML/)
+**The ultimate BAML editor for .NET applications.** Edit BAML resources embedded in compiled executables — **no source code required**.
 
-# Tutorial
-To understand correctly, first pay attention to the photo below :
+## ✨ Features
+- **Direct BAML Editing** – Modify embedded BAML resources without the original XAML files.  
+- **Post-Build Tool** – Works on compiled assemblies, fully compatible with obfuscators.  
+- **Targeted Modifications** – Change UI elements like **Window Titles** and **TextBlock** content effortlessly.  
+- **Memory-Efficient** – Reads and writes BAML directly via the powerful `dnlib` library.  
+- **Cross-Version Support** – Works across different .NET framework versions.
 
-![g.Resources](Images/bamls.png)
+## 💡 What is BAML?
+BAML (**Binary Application Markup Language**) is a compiled, binary representation of XAML used in WPF applications.  
+It is usually embedded inside a `.g.resources` file within your `.NET` assembly.  
 
-In the Resources, there are resource called `*.g.resources`, where there are `*.baml` files. 
+`dnlib.BAML` allows you to:
+1. Read `.baml` files from compiled assemblies.
+2. Modify UI elements programmatically.
+3. Write the edited BAML back into the executable.
 
-From now on, we will call this resource by the name `g.resources`, and we will call the files inside it as its `elements`.
+This means you can **change the UI of any WPF app** without needing the original source.
 
-> Now first install the package from [Nuget](https://www.nuget.org/packages/dnlib.BAML).
+## 🖼️ How It Works
+Inside a compiled assembly:
+```
+Assembly
+└── Resources
+    └── *.g.resources
+        ├── Window1.baml
+        └── MainPage.baml
+```
+Each `.baml` file corresponds to a XAML file. `dnlib.BAML` gives you programmatic access to these files for reading, modifying, and saving.
 
-Then you can use the library, below I changed the title of the Window and the text of a TextBlock:
+## ⚙️ Quick Start
+### Step 1 – Install the Package
+```bash
+Install-Package dnlib.BAML
+```
+### Step 2 – Usage Example
 ```csharp
 using dnlib.DotNet;
 using dnlib.DotNet.Resources;
@@ -47,7 +70,11 @@ using (ModuleDefMD module = ModuleDefMD.Load("WpfApp1.exe"))
     }
 }
 ```
-![Editor](Images/baml_editor.gif)
+**Explanation:**
+- **Load Assembly:** Opens the target `.exe`.
+- **Check Resources:** Verifies if `g.resources` exists.
+- **Edit Elements:** Iterates over BAML records and modifies desired values.
+- **Save Changes:** Writes the updated BAML back into the assembly.
 
-# List of other open source libraries used
+# :pushpin:Credits
 - [dnlib](https://github.com/0xd4d/dnlib) (Reads and writes .NET assemblies and modules)
